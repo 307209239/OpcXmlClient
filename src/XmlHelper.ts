@@ -1,6 +1,13 @@
 import { OpcXmlElement } from "./OpcXmlElement";
 
 export class XmlHelper {
+    /**
+     * 找到子元素，不存在则新建元素， 并赋值
+     * @param el 
+     * @param name 
+     * @param val 
+     * @param isCDATA 
+     */
     static SetValue(el: OpcXmlElement, name: string, val: string, isCDATA: boolean=true):void {
         let ele = el.FindChildByName(name)?.DomElement;
         if (ele != null)

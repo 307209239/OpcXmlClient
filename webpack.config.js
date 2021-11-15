@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const isProduction = process.env.NODE_ENV == "production";
 
 const config = {
-  entry: "./index.ts",
+  entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
     filename:"OpcClient.js",
@@ -17,7 +17,7 @@ const config = {
   devServer: {
     https: true,
     open: true,
-    host: "0.0.0.0",
+    host: "localhost",
   },
   plugins: [
     new HtmlWebpackPlugin({
