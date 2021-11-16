@@ -4,7 +4,7 @@ import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
 
 export class  OpcObjectList extends OpcList{
-    IsObjectList(){return true}
+    IsObjectList=true
     AppendItemById(id:string):void{
         new OpcObject(this.Docment,null, "__listItem", this).SetObjectId(id);
     }

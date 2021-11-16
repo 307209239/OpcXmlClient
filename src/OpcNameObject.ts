@@ -3,14 +3,15 @@ import { XmlHelper } from "./XmlHelper";
 
 export class OpcNameObject extends OpcObject {
 
-    IsNamedObject(): boolean { return true }
+    IsNamedObject=true
     SetRef(val: string): void {
         
         XmlHelper.SetValue(this, "__name", val, true)
 
     }
     GetRef(): string | null {
-        return this.DomElement.nodeValue;
+        let el=this.FindChildByName("__name");
+        return el==null?null:el.GetValue()
 
     }
 

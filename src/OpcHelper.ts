@@ -12,7 +12,7 @@ export class OpcHelper {
     Session: OpcSession;
     Service: OpcService | null;
     /**更新NDO */
-    ChangesNDO(name: string): OpcNameObject  {
+    ChangesNDO(name: string): OpcNameObject {
         this.InputData().NamedObjectField("ObjectToChange").SetRef(name);
         this.Perform(PerformType.Load);
         return this.InputData().NamedObjectField("ObjectChanges");
@@ -48,8 +48,10 @@ export class OpcHelper {
 
     constructor(host: string, port: number, user: string, password: string, serviceName: string, isService: boolean = true) {
         this.Session = new OpcSession(host, port, user, password);
-        if (isService)
+        if (isService) {
             this.Service = new OpcService(this.Session.Document, null, "__service", this.Session.Document.GetRootElement());
+            this.Service?.DomElement.setAttribute("__serviceType", serviceName)
+        }
         else {
             this.Service = null
         }
@@ -59,31 +61,31 @@ export class OpcHelper {
 
 
     }
-    InputData(): OpcObject  {
+    InputData(): OpcObject {
         if (this.Service != null)
             return this.Service.InputData();
         else
-           throw new Error("Service 没有实例化")
+            throw new Error("Service 没有实例化")
     }
-    RequestData():OpcRequestData|undefined{
-       return this.Service?.RequestData()
+    RequestData(): OpcRequestData | undefined {
+        return this.Service?.RequestData()
     }
-    Submit(){
-     return Promise.race([ this.Session.Document.Submit()]);
+    Submit() {
+        return Promise.race([this.Session.Document.Submit()]);
     }
     ExecuteResult() {
-        var doc=this
-        return Promise.race([new Promise<[boolean,string|null]>(function(resolve){
-            let x: [boolean, string|null]=[false,""];
+        let doc = this
+        return Promise.race([new Promise<[boolean, string | null]>(function (resolve) {
+            let x: [boolean, string | null] = [false, ""];
             doc.Service?.SetExecute();
             doc.RequestData()?.RequestField("CompletionMsg");
-            doc.Submit().then(function(data) {
-                x= data?.CheckErrors();
-                x[0]=!x[0]
+            doc.Submit().then(function (data) {
+                x = data?.CheckErrors();
+                x[0] = !x[0]
                 resolve(x)
             });
-            
+
         })]);
-       
+
     }
 }

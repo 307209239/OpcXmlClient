@@ -3,11 +3,13 @@ import { XmlHelper } from "./XmlHelper";
 
 export class OpcXmlElement {
     FindChildByName(name: string): OpcXmlElement | null {
-        let els = this.DomElement.getElementsByTagName(name)
+        let els = this.DomElement.childNodes
         if (els.length > 0)
-            return new OpcXmlElement(this.Docment, els.item(0))
-        else
-            return null
+            for (let key in els) {
+                if (els[key].nodeName == name)
+                    return new OpcXmlElement(this.Docment, els[key] as Element)
+            }
+        return null
     }
     Docment: OpcDocument;
     DomElement: Element;
@@ -38,41 +40,41 @@ export class OpcXmlElement {
         this.DomElement.appendChild(ele.DomElement)
 
     }
-    public IsField(): boolean { return false };
+    public IsField: boolean = false;
 
-    public IsObject(): boolean { return false };
+    public IsObject: boolean = false
 
-    public IsContainer(): boolean { return false };
+    public IsContainer: boolean = false
 
-    public IsList(): boolean { return false };
+    public IsList: boolean = false
 
-    public IsNamedObject(): boolean { return false };
+    public IsNamedObject: boolean = false
 
-    public IsService(): boolean { return false };
+    public IsService: boolean = false
 
-    public IsRevisionedObject(): boolean { return false };
+    public IsRevisionedObject: boolean = false
 
-    public IsRequestData(): boolean { return false };
+    public IsRequestData: boolean = false
 
-    public IsDataField(): boolean { return false };
+    public IsDataField: boolean = false
 
-    public IsSubentity(): boolean { return false };
+    public IsSubentity: boolean = false
 
-    public IsDataList(): boolean { return false };
+    public IsDataList: boolean = false
 
-    public IsContainerList(): boolean { return false };
+    public IsContainerList: boolean = false
 
-    public IsNamedObjectList(): boolean { return false };
+    public IsNamedObjectList: boolean = false
 
-    public IsRevisionedObjectList(): boolean { return false };
+    public IsRevisionedObjectList: boolean = false
 
-    public IsSubentityList(): boolean { return false };
+    public IsSubentityList: boolean = false
 
-    public IsNamedSubentityList(): boolean { return false };
+    public IsNamedSubentityList: boolean = false
 
-    public IsNamedSubentity(): boolean { return false };
+    public IsNamedSubentity: boolean = false
 
-    public IsObjectList(): boolean { return false };
+    public IsObjectList: boolean = false
     GetValue(): string {
         return XmlHelper.GetValue(this.DomElement)
     }

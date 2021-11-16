@@ -4,7 +4,7 @@ import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
 
 export class OpcList extends OpcField {
-    IsList() { return true }
+    IsList=true
     SetListAction(action: ListActions): void {
 
         switch (action) {
@@ -31,12 +31,12 @@ export class OpcList extends OpcField {
         return array
     }
     DeleteItemByIndex(index: number): void {
-        var el = new OpcXmlElement(this.Docment, null, "__listItemAction", this)
+        let el = new OpcXmlElement(this.Docment, null, "__listItemAction", this)
         el.DomElement.setAttribute("__listItemAction", "delete")
         XmlHelper.SetValue(el, "__index", index.toString())
 
     }
-    GetItem(index: number): OpcXmlElement {
+    GetItemByIndex(index: number): OpcXmlElement {
         let els = this.DomElement.getElementsByTagName("__listItem")
         for (let key in els) {
             if (parseInt(key) === index)

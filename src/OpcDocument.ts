@@ -14,7 +14,7 @@ export class OpcDocument {
     constructor(session: OpcSession) {
         this.Session = session;
         this.RequestDocument=document.implementation.createDocument("","",null)
-        var el= this.RequestDocument.createElement("__InSite");
+        let el= this.RequestDocument.createElement("__InSite");
         el.setAttribute("__version","1.1")
         el.setAttribute("__encryption","2")
         this.RequestDocument.appendChild(el)

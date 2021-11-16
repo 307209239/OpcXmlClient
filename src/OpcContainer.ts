@@ -4,7 +4,7 @@ import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
 
 export class OpcContainer extends OpcObject {
-    IsContainer() { return true }
+    IsContainer=true
     GetLevel(): string {
         let el = this.FindChildByName("__level");
         if (el != null) {

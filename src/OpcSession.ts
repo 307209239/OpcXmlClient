@@ -20,7 +20,7 @@ export class OpcSession {
         let el = new OpcXmlElement(this.Document, null, "__session", this.Document.GetRootElement())
         this.APIUrl = "https://" + host + ":"+port+"/CamstarAppServer/api"
         //OpcSession.GetSessionId(host, port, userName, password)
-        if (this.SessionId.length > 0) {
+        if (this.SessionId.length > 16) {
             let uel = el.Docment.CreateDomElement("__useSession")
             let user = new OpcNameObject(this.Document, null, "user", new OpcXmlElement(this.Document, uel)).SetRef(userName)
 
@@ -29,6 +29,17 @@ export class OpcSession {
             sel.appendChild(el.DomElement.ownerDocument.createCDATASection("aaaaaaaaaaaaaaaaaaaaaaa"));
             uel.appendChild(sel);
             el.DomElement.appendChild(uel);
+        }
+        else{
+            let uel = el.Docment.CreateDomElement("__connect")
+            let user = new OpcNameObject(this.Document, null, "user", new OpcXmlElement(this.Document, uel)).SetRef(userName)
+
+            let sel = el.Docment.CreateDomElement("password")
+            sel.setAttribute("__encrypted", "no");
+            sel.appendChild(el.DomElement.ownerDocument.createCDATASection(password));
+            uel.appendChild(sel);
+            el.DomElement.appendChild(uel);
+
         }
 
 
