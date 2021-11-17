@@ -23,31 +23,31 @@ export class OpcObject extends OpcField {
     }
     ObjectField(name: string): OpcObject { return new OpcObject(this.Docment, null, name, this); }
 
-    ObjectList(name: string): OpcObjectList { return new OpcObjectList(this.Docment,null, name, this); }
+    ObjectList(name: string): OpcObjectList { return new OpcObjectList(this.Docment, null, name, this); }
 
-    DataList(name: string):OpcDataList { return new OpcDataList(this.Docment,null, name, this); }
+    DataList(name: string): OpcDataList { return new OpcDataList(this.Docment, null, name, this); }
 
-    ContainerList(name: string):OpcContainerList { return new OpcContainerList(this.Docment,null, name, this); }
+    ContainerList(name: string): OpcContainerList { return new OpcContainerList(this.Docment, null, name, this); }
 
-    SubentityList(name: string):OpcSubentityList { return new OpcSubentityList(this.Docment,null, name, this); }
+    SubentityList(name: string): OpcSubentityList { return new OpcSubentityList(this.Docment, null, name, this); }
 
-    NamedObjectList(name: string):OpcNamedObjectList { return new OpcNamedObjectList(this.Docment,null, name, this); }
+    NamedObjectList(name: string): OpcNamedObjectList { return new OpcNamedObjectList(this.Docment, null, name, this); }
 
-    RevisionedObjectList(name: string):OpcRevisionedObjectList { return new OpcRevisionedObjectList(this.Docment,null, name, this); }
+    RevisionedObjectList(name: string): OpcRevisionedObjectList { return new OpcRevisionedObjectList(this.Docment, null, name, this); }
 
-    NamedSubentityList(name: string):OpcNamedSubentityList { return new OpcNamedSubentityList(this.Docment,null, name, this); }
+    NamedSubentityList(name: string): OpcNamedSubentityList { return new OpcNamedSubentityList(this.Docment, null, name, this); }
 
-    SubentityField(name: string):OpcSubentity { return new OpcSubentity(this.Docment,null, name, this); }
+    SubentityField(name: string): OpcSubentity { return new OpcSubentity(this.Docment, null, name, this); }
 
-    ContainerField(name: string):OpcContainer { return new OpcContainer(this.Docment,null, name, this); }
+    ContainerField(name: string): OpcContainer { return new OpcContainer(this.Docment, null, name, this); }
 
-    NamedSubentityField(name: string):OpcNamedSubentity { return new OpcNamedSubentity(this.Docment,null, name, this); }
+    NamedSubentityField(name: string): OpcNamedSubentity { return new OpcNamedSubentity(this.Docment, null, name, this); }
 
-    RevisionedObjectField(name: string):OpcRevisionedObject { return new OpcRevisionedObject(this.Docment,null, name, this); }
+    RevisionedObjectField(name: string): OpcRevisionedObject { return new OpcRevisionedObject(this.Docment, null, name, this); }
 }
 import { OpcNameObject } from "./OpcNameObject";
 import { OpcPerform } from "./OpcPerform";
-import { OpcDataField } from "./OpcDataField";import { OpcObjectList } from "./OpcObjectList ";
+import { OpcDataField } from "./OpcDataField"; import { OpcObjectList } from "./OpcObjectList ";
 import { OpcDataList } from "./OpcDataList";
 import { OpcContainerList } from "./OpcContainerList";
 import { OpcSubentityList } from "./OpcSubentityList";
