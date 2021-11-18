@@ -2,6 +2,11 @@ import { OpcDocument } from "./OpcDocument";
 import { XmlHelper } from "./XmlHelper";
 
 export class OpcXmlElement {
+    /**
+     * 查找和name匹配的第一个节点
+     * @param name 
+     * @returns 
+     */
     FindChildByName(name: string): OpcXmlElement | null {
         let els = this.DomElement.childNodes
         if (els.length > 0)
@@ -39,6 +44,12 @@ export class OpcXmlElement {
 
         this.DomElement.appendChild(ele.DomElement)
 
+    }
+    /**
+     * 删除所有子节点
+     */
+    RemoveAllChildren():void{
+        this.DomElement.innerHTML=""
     }
     public IsField: boolean = false;
 

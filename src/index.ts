@@ -9,6 +9,8 @@ var com = new OpcHelper("192.168.18.129", 443, "camstaradmin", "abc123..","Facto
  containers.DeleteItem("LOT02")
  containers.ChangeItem("old","new");
  //containers.DeleteItem("LOT02")
+ let req=com.RequestData()
+ req?.RequestField("Container.Qty.Qty.Qty")
 var re = com.ExecuteResult().then(function ([status,message]) {
     console.info( new XMLSerializer().serializeToString(com.Session.Document.RequestDocument))
     if(status)

@@ -8,13 +8,13 @@ export class XmlHelper {
      * @param val 
      * @param isCDATA 
      */
-    static SetValue(el: OpcXmlElement, name: string, val: string, isCDATA: boolean=true):void {
+    static SetValue(el: OpcXmlElement, name: string, val: string, isCDATA: boolean=true):Element {
         let ele = el.FindChildByName(name)?.DomElement;
         if (ele == null)
             el=new OpcXmlElement(el.Docment,null, name,el);
         if(isCDATA)
             el.DomElement.appendChild(el.DomElement.ownerDocument.createCDATASection(val))
-       
+        return el.DomElement
     }
     static GetValue(el:Element|null):string{
         if(el==null) return""
