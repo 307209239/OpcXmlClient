@@ -48,8 +48,8 @@ export class OpcXmlElement {
     /**
      * 删除所有子节点
      */
-    RemoveAllChildren():void{
-        this.DomElement.innerHTML=""
+    RemoveAllChildren(): void {
+        this.DomElement.innerHTML = ""
     }
     public IsField: boolean = false;
 
@@ -88,5 +88,21 @@ export class OpcXmlElement {
     public IsObjectList: boolean = false
     GetValue(): string {
         return XmlHelper.GetValue(this.DomElement)
+    }
+    GetAllChildren(): Array<OpcXmlElement> {
+        let childs = this.DomElement.childNodes
+        let list: Array<OpcXmlElement> = new Array
+        for (let key in childs) {
+            list.push(new OpcXmlElement(this.Docment, childs[key] as Element))
+        }
+        return list
+    }
+    /**
+     * 设置属性
+     * @param name 名称
+     * @param val 值
+     */
+    SetAttribute(name:string,val:string):void{
+        this.DomElement.setAttribute(name,val)
     }
 }

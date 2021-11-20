@@ -6,6 +6,7 @@ import { OpcRequestData } from "./OpcRequestData";
 import { OpcService } from "./OpcService";
 import { OpcSession } from "./OpcSession";
 import { PerformType } from "./PerformType";
+import { XmlHelper } from "./XmlHelper";
 
 export class OpcHelper {
 
@@ -19,7 +20,10 @@ export class OpcHelper {
     }
     NewNDO(name: string): OpcNameObject {
         this.Perform(PerformType.New);
-        return this.InputData()?.NamedObjectField("ObjectChanges");
+        let el= this.InputData()?.NamedObjectField("ObjectChanges");
+        el.SetRef(name)
+        return el
+
     }
     Perform(performType: PerformType): OpcPerform | null {
         if (this.Service == null) return null
@@ -82,6 +86,10 @@ export class OpcHelper {
             doc.Submit().then(function (data) {
                 x = data?.CheckErrors();
                 x[0] = !x[0]
+                if(x[0]&&data.ResponseDocument!=null){
+                   let el= data.ResponseDocument.getElementsByName("CompletionMsg")
+                    XmlHelper.GetValue(el[0])
+                }
                 resolve(x)
             });
 

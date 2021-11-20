@@ -4,22 +4,8 @@ import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
 
 export class OpcContainer extends OpcObject {
-    IsContainer=true
-    GetLevel(): string {
-        let el = this.FindChildByName("__level");
-        if (el != null) {
-            let c = el.FindChildByName("__name")
-            if (c != null)
-                return c.GetValue();
-            else
-                return ""
+    IsContainer = true
 
-        }
-        else {
-            return ""
-        }
-
-    }
     GetName(): string {
         let el = this.FindChildByName("__name");
         if (el != null) {
@@ -34,12 +20,14 @@ export class OpcContainer extends OpcObject {
         if (level?.length > 0) {
             let el = this.FindChildByName("__level");
             if (el == null) {
-                el = new OpcXmlElement(this.Docment, null,"__level",this)
+                el = new OpcXmlElement(this.Docment, null, "__level", this)
             }
             XmlHelper.SetValue(el, "__name", name)
         }
-
-
+    }
+    GetLevel(): string {
+        let el = this.FindChildByName("__level")?.FindChildByName("__name")
+        return el == null || el == undefined ? "" : el.GetValue()
 
 
     }

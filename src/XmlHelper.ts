@@ -16,6 +16,26 @@ export class XmlHelper {
             el.DomElement.appendChild(el.DomElement.ownerDocument.createCDATASection(val))
         return el.DomElement
     }
+    /**
+     * 
+     * @param el 
+     * @param name1 一级节点名称
+     * @param name2 二级节点名称
+     * @param value 二级节点的值
+     * @param isCDATA 
+     * @returns 
+     */
+    static SetValue2(el:OpcXmlElement,name1:string,name2:string,value:string,isCDATA: boolean=true):Element{
+        let ele = el.FindChildByName(name1)?.DomElement;
+        if (ele == null){
+            let e1=new OpcXmlElement(el.Docment,null, name1,el);
+            return  XmlHelper.SetValue(e1,name2,value,isCDATA)
+        }
+        else{
+            let e1=new OpcXmlElement(el.Docment,ele);
+            return  XmlHelper.SetValue(e1,name2,value,isCDATA)
+        }
+    }
     static GetValue(el:Element|null):string{
         if(el==null) return""
          let str=el.innerHTML;

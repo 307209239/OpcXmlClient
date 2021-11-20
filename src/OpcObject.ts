@@ -15,15 +15,11 @@ export class OpcObject extends OpcField {
         return el;
     }
     SetObjectId(id: string): void {
-        let el = this.FindChildByName("__Id") as OpcDataField
-        if (el == null)
-            el = new OpcDataField(this.Docment, null, "__Id", this);
-        el.SetValue(id);
-
+        XmlHelper.SetValue(this,"__Id",id)
     }
     ObjectField(name: string): OpcObject { return new OpcObject(this.Docment, null, name, this); }
 
-    ObjectList(name: string): OpcObjectList { return new OpcObjectList(this.Docment, null, name, this); }
+    ObjectList(name: string):OpcObjectList { return new OpcObjectList(this.Docment, null, name, this); }
 
     DataList(name: string): OpcDataList { return new OpcDataList(this.Docment, null, name, this); }
 
@@ -58,4 +54,5 @@ import { OpcSubentity } from "./OpcSubentity";
 import { OpcContainer } from "./OpcContainer";
 import { OpcNamedSubentity } from "./OpcNamedSubentity";
 import { OpcRevisionedObject } from "./OpcRevisionedObject";
+import { XmlHelper } from "./XmlHelper";
 

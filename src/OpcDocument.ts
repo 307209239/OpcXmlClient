@@ -3,26 +3,26 @@ import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
 
 export class OpcDocument {
-    CreateDomElement(tagName: string):Element {
-       return this.RequestDocument.createElement(tagName);
+    CreateDomElement(tagName: string): Element {
+        return this.RequestDocument.createElement(tagName);
     }
 
     RequestDocument: XMLDocument;
-    ResponseDocument: XMLDocument|null;
+    ResponseDocument: XMLDocument | null;
     Session: OpcSession;
     RootElement: OpcXmlElement;
     constructor(session: OpcSession) {
         this.Session = session;
-        this.RequestDocument=document.implementation.createDocument("","",null)
-        let el= this.RequestDocument.createElement("__InSite");
-        el.setAttribute("__version","1.1")
-        el.setAttribute("__encryption","2")
+        this.RequestDocument = document.implementation.createDocument("", "", null)
+        let el = this.RequestDocument.createElement("__InSite");
+        el.setAttribute("__version", "1.1")
+        el.setAttribute("__encryption", "2")
         this.RequestDocument.appendChild(el)
-        this.RootElement = new OpcXmlElement(this,el)
+        this.RootElement = new OpcXmlElement(this, el)
         this.ResponseDocument = null;
     }
     Submit() {
-        return  this.Session.Submit(this.RequestDocument)
+        return this.Session.Submit(this.RequestDocument)
     }
     CheckError(): boolean {
         return true;
@@ -31,21 +31,28 @@ export class OpcDocument {
     GetRootElement(): OpcXmlElement {
         return this.RootElement;
     }
-    CheckErrors():[boolean,string|null]{
-        let re:[boolean,string|null]=[false,""] 
-       if(this.ResponseDocument!=null){
-         let nodes=this.ResponseDocument.getElementsByTagName("__exceptionData")
-        for (let key in nodes){
-            re[1]=XmlHelper.GetValue(nodes[0].getElementsByTagName("__errorDescription")[0])
-            re[0]=true
-            break
+    CheckErrors(): [boolean, string | null] {
+        let re: [boolean, string | null] = [false, ""]
+        if (this.ResponseDocument != null) {
+            let nodes = this.ResponseDocument.getElementsByTagName("__exceptionData")
+            if (nodes.length > 0)
+                for (let key in nodes) {
+                    re[1] = XmlHelper.GetValue(nodes[0].getElementsByTagName("__errorDescription")[0])
+                    re[0] = true
+                    break
+                }
+            else
+            {
+                re[1]=""
+                re[0]=false
+            }
+            
+
+            return re
         }
-        
-        return re
-       }
-       else{
-           return [false,"没有返回值"]
-       }
+        else {
+            return [false, "没有返回值"]
+        }
 
     }
 
