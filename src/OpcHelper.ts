@@ -1,3 +1,4 @@
+import { ExecuteResult } from "./model/ExecuteResult";
 import { OpcDocument } from "./OpcDocument";
 import { OpcNameObject } from "./OpcNameObject";
 import { OpcObject } from "./OpcObject";
@@ -77,23 +78,54 @@ export class OpcHelper {
     Submit() {
         return Promise.race([this.Session.Document.Submit()]);
     }
-    ExecuteResult() {
+    ExecuteResult(){
         let doc = this
-        return Promise.race([new Promise<[boolean, string | null]>(function (resolve) {
-            let x: [boolean, string | null] = [false, ""];
+        return Promise.race([new Promise<ExecuteResult>(function (resolve) {
+           
             doc.Service?.SetExecute();
             doc.RequestData()?.RequestField("CompletionMsg");
             doc.Submit().then(function (data) {
-                x = data?.CheckErrors();
-                x[0] = !x[0]
-                if(x[0]&&data.ResponseDocument!=null){
+                let x = data?.CheckErrors();
+                x.Status = !x.Status
+                if(x.Status&&data.ResponseDocument!=null){
                    let el= data.ResponseDocument.getElementsByName("CompletionMsg")
                     XmlHelper.GetValue(el[0])
+                   
                 }
+                x.Data=OpcHelper.Xml2json(data.ResponseDocument)
                 resolve(x)
             });
 
         })]);
 
     }
+    
+   static Xml2json(xml:any ):Object {
+        try {
+          let obj :any=new Object();
+          if (xml.children.length > 0) {
+            for (let i = 0; i < xml.children.length; i++) {
+              let item = xml.children.item(i);
+              if(item==null) continue;
+              let nodeName = item?.nodeName;
+              if(item==null) continue;
+              if (nodeName!=null&& typeof(obj[nodeName]) == "undefined") {
+                obj[nodeName] = this.Xml2json(item);
+              } else {
+                if (nodeName!=null&&typeof(obj[nodeName].push) == "undefined") {
+                  var old = obj[nodeName];
+                  obj[nodeName] = [];
+                  obj[nodeName].push(old);
+                }
+                obj[nodeName].push(this.Xml2json(item));
+              }
+            }
+          } else {
+            obj = xml.textContent;
+          }
+          return obj;
+        } catch (e) {
+         throw e
+        }
+      }
 }

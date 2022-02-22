@@ -1,3 +1,4 @@
+import { ExecuteResult } from "./model/ExecuteResult";
 import { OpcSession } from "./OpcSession";
 import { OpcXmlElement } from "./OpcXmlElement";
 import { XmlHelper } from "./XmlHelper";
@@ -31,30 +32,31 @@ export class OpcDocument {
     GetRootElement(): OpcXmlElement {
         return this.RootElement;
     }
-    CheckErrors(): [boolean, string | null] {
-        let re: [boolean, string | null] = [false, ""]
+    CheckErrors(): ExecuteResult {
+        let re=new ExecuteResult()
         if (this.ResponseDocument != null) {
             let nodes = this.ResponseDocument.getElementsByTagName("__exceptionData")
             if (nodes.length > 0)
                 for (let key in nodes) {
-                    re[1] = XmlHelper.GetValue(nodes[0].getElementsByTagName("__errorDescription")[0])
-                    re[0] = true
+                    re.Message = XmlHelper.GetValue(nodes[0].getElementsByTagName("__errorDescription")[0])
+                    re.Status = true
                     break
                 }
             else
             {
-                re[1]=""
-                re[0]=false
+                re.Message=""
+                re.Status=false
             }
             
 
             return re
         }
         else {
-            return [false, "没有返回值"]
+            return new ExecuteResult(false, "没有返回值")
         }
 
     }
+   
 
 
 

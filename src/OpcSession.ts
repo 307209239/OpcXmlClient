@@ -45,6 +45,7 @@ export class OpcSession {
 
     }
     Submit(requestDocument: XMLDocument) {
+        debugger
         let doc=this.Document;
         let url=this.APIUrl
         let p=new Promise<OpcDocument>(function(resolve){
@@ -54,7 +55,7 @@ export class OpcSession {
             xhr.send(requestDocument);
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    
+                
                     doc.ResponseDocument=this.responseXML
                     resolve(doc)
                 }
